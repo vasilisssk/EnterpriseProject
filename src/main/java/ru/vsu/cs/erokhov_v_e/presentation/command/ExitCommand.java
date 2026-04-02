@@ -8,7 +8,12 @@ public class ExitCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "exit";
+    }
+
+    @Override
     public String description() {
-        return "exit — выйти из программы";
+        return getName() + " — выйти из программы";
     }
 }

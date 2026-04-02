@@ -31,7 +31,12 @@ public class UpdateDepartmentCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "update-dep";
+    }
+
+    @Override
     public String description() {
-        return "update-dep <id>,<название> — переименовать отдел";
+        return getName() + " <id>,<название> — переименовать отдел";
     }
 }

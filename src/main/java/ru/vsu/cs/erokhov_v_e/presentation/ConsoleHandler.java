@@ -21,7 +21,7 @@ public class ConsoleHandler {
             System.out.print("> ");
             String input = scanner.nextLine();
 
-            result =  dispatcher.dispatch(input);
+            result = dispatcher.dispatch(input);
         } while (result != CommandResult.EXIT);
 
         scanner.close();

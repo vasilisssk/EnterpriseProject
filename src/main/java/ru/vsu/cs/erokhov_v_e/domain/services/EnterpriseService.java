@@ -28,12 +28,10 @@ public class EnterpriseService {
     }
 
     public void removeDepartment(long id) {
-        // Сначала удаляем всех сотрудников отдела
         List<Employee> employees = employeeService.selectByDepartmentId(id);
         for (Employee employee : employees) {
             employeeService.delete(employee.getId());
         }
-        // Затем удаляем сам отдел
         departmentService.delete(id);
     }
 
@@ -74,12 +72,12 @@ public class EnterpriseService {
     }
 
     public List<Employee> selectEmployeesByDepartment(long departmentId) {
-        departmentService.selectById(departmentId); // проверка что отдел существует
+        departmentService.selectById(departmentId);
         return employeeService.selectByDepartmentId(departmentId);
     }
 
     public double selectTotalSalary(long departmentId) {
-        departmentService.selectById(departmentId); // проверка что отдел существует
+        departmentService.selectById(departmentId);
         return employeeService.selectTotalSalaryByDepartment(departmentId);
     }
 }

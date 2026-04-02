@@ -10,8 +10,13 @@ public class CommandDispatcher {
 
     private final Map<String, Command> commands = new LinkedHashMap<>();
 
-    public void register(String name, Command command) {
-        commands.put(name, command);
+    public void register(Command command) {
+        if (commands.containsKey(command.getName())) {
+            throw new IllegalArgumentException(
+                    "Команда с именем '" + command.getName() + "' уже зарегистрирована"
+            );
+        }
+        commands.put(command.getName(), command);
     }
 
     public Map<String, Command> getCommands() {

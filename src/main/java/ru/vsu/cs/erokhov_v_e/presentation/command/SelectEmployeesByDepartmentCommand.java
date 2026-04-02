@@ -39,7 +39,12 @@ public class SelectEmployeesByDepartmentCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "emps";
+    }
+
+    @Override
     public String description() {
-        return "emps <id отдела> — показать сотрудников отдела";
+        return getName() + " <id отдела> — показать сотрудников отдела";
     }
 }

@@ -18,17 +18,17 @@ public class CommandFactory {
 
     public static CommandDispatcher createDispatcher(EnterpriseService enterpriseService) {
         CommandDispatcher dispatcher = new CommandDispatcher();
-        dispatcher.register("insert-dep", new InsertDepartmentCommand(enterpriseService));
-        dispatcher.register("remove-dep", new RemoveDepartmentCommand(enterpriseService));
-        dispatcher.register("update-dep", new UpdateDepartmentCommand(enterpriseService));
-        dispatcher.register("insert-emp", new InsertEmployeeCommand(enterpriseService));
-        dispatcher.register("remove-emp", new RemoveEmployeeCommand(enterpriseService));
-        dispatcher.register("update-emp", new UpdateEmployeeCommand(enterpriseService));
-        dispatcher.register("deps", new SelectAllDepartmentsCommand(enterpriseService));
-        dispatcher.register("emps", new SelectEmployeesByDepartmentCommand(enterpriseService));
-        dispatcher.register("salary", new SelectTotalSalaryCommand(enterpriseService));
-        dispatcher.register("exit", new ExitCommand());
-        dispatcher.register("help", new HelpCommand(dispatcher.getCommands()));
+        dispatcher.register(new InsertDepartmentCommand(enterpriseService));
+        dispatcher.register(new RemoveDepartmentCommand(enterpriseService));
+        dispatcher.register(new UpdateDepartmentCommand(enterpriseService));
+        dispatcher.register(new InsertEmployeeCommand(enterpriseService));
+        dispatcher.register(new RemoveEmployeeCommand(enterpriseService));
+        dispatcher.register(new UpdateEmployeeCommand(enterpriseService));
+        dispatcher.register(new SelectAllDepartmentsCommand(enterpriseService));
+        dispatcher.register(new SelectEmployeesByDepartmentCommand(enterpriseService));
+        dispatcher.register(new SelectTotalSalaryCommand(enterpriseService));
+        dispatcher.register(new ExitCommand());
+        dispatcher.register(new HelpCommand(dispatcher.getCommands()));
         return dispatcher;
     }
 }

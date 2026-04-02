@@ -28,7 +28,12 @@ public class SelectAllDepartmentsCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "deps";
+    }
+
+    @Override
     public String description() {
-        return "deps — показать все отделы";
+        return getName() + " — показать все отделы";
     }
 }

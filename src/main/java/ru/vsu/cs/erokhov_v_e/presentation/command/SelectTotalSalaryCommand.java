@@ -29,7 +29,12 @@ public class SelectTotalSalaryCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "salary";
+    }
+
+    @Override
     public String description() {
-        return "salary <id отдела> — показать сумму зарплат отдела";
+        return getName() + " <id отдела> — показать сумму зарплат отдела";
     }
 }

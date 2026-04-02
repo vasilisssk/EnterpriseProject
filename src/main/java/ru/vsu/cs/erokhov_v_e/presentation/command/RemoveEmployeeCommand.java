@@ -29,7 +29,12 @@ public class RemoveEmployeeCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "remove-emp";
+    }
+
+    @Override
     public String description() {
-        return "remove-emp <id> — удалить сотрудника";
+        return getName() + " <id> — удалить сотрудника";
     }
 }

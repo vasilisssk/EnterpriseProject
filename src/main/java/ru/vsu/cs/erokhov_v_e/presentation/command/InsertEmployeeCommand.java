@@ -34,7 +34,12 @@ public class InsertEmployeeCommand implements Command{
     }
 
     @Override
+    public String getName() {
+        return "insert-emp";
+    }
+
+    @Override
     public String description() {
-        return "insert-emp <ФИО>,<возраст>,<зарплата>,<id отдела> — добавить сотрудника";
+        return getName()+ " <ФИО>,<возраст>,<зарплата>,<id отдела> — добавить сотрудника";
     }
 }

@@ -19,7 +19,12 @@ public class HelpCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "help";
+    }
+
+    @Override
     public String description() {
-        return "help — показать список команд";
+        return getName() + " — показать список команд";
     }
 }

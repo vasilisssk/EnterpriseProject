@@ -35,7 +35,12 @@ public class UpdateEmployeeCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "update-emp";
+    }
+
+    @Override
     public String description() {
-        return "update-emp <id>,<ФИО>,<возраст>,<зарплата>,<id нового отдела> — редактировать сотрудника";
+        return getName() + " <id>,<ФИО>,<возраст>,<зарплата>,<id нового отдела> — редактировать сотрудника";
     }
 }

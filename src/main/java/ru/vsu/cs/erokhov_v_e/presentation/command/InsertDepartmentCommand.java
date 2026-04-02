@@ -23,7 +23,12 @@ public class InsertDepartmentCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "insert-dep";
+    }
+
+    @Override
     public String description() {
-        return "insert-dep <название> - создать пустой отдел";
+        return getName() + " <название> - создать пустой отдел";
     }
 }

@@ -29,7 +29,12 @@ public class RemoveDepartmentCommand implements Command {
     }
 
     @Override
+    public String getName() {
+        return "remove-dep";
+    }
+
+    @Override
     public String description() {
-        return "remove-dep <id> — удалить отдел и всех его сотрудников";
+        return getName() + " <id> — удалить отдел и всех его сотрудников";
     }
 }
