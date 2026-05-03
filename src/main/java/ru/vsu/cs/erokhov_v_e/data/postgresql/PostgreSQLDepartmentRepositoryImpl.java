@@ -17,6 +17,17 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
 
     private final DataSource dataSource;
 
+    private static final String SELECT_DEP_BY_ID_QUERY = "SELECT id, name, employee_count FROM department WHERE id = ?";
+    private static final String SELECT_ALL_DEPS_QUERY = "SELECT id, name, employee_count FROM department";
+    private static final String DELETE_DEP_BY_ID_QUERY = "DELETE FROM department WHERE id = ?";
+    private static final String EXISTS_DEP_BY_ID_QUERY = "SELECT 1 FROM department WHERE id = ?";
+    private static final String INSERT_DEP_QUERY = "INSERT INTO department (name, employee_count) VALUES (?, ?)";
+    private static final String UPDATE_DEP_QUERY = "UPDATE department SET name = ?, employee_count = ? WHERE id = ?";
+
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String EMPLOYEE_COUNT = "employee_count";
+
     public PostgreSQLDepartmentRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -32,18 +43,16 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
 
     @Override
     public Optional<Department> selectById(long id) {
-        String selectDepByIdQuery = "SELECT id, name, employee_count FROM department WHERE id = ?";
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectDepByIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEP_BY_ID_QUERY)) {
 
             preparedStatement.setLong(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     Department dept = new Department(
-                            rs.getLong("id"),
-                            rs.getString("name"),
-                            rs.getInt("employee_count")
+                            rs.getLong(ID),
+                            rs.getString(NAME),
+                            rs.getInt(EMPLOYEE_COUNT)
                     );
                     return Optional.of(dept);
                 }
@@ -57,17 +66,16 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
     @Override
     public List<Department> selectAll() {
         List<Department> departments = new ArrayList<>();
-        String selectAllDepsQuery = "SELECT id, name, employee_count FROM department";
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(selectAllDepsQuery)) {
+             ResultSet rs = statement.executeQuery(SELECT_ALL_DEPS_QUERY)) {
 
             while (rs.next()) {
                 departments.add(new Department(
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getInt("employee_count")
+                        rs.getLong(ID),
+                        rs.getString(NAME),
+                        rs.getInt(EMPLOYEE_COUNT)
                 ));
             }
         } catch (SQLException e) {
@@ -78,10 +86,8 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
 
     @Override
     public void deleteById(long id) {
-        String deleteDepByIdQuery = "DELETE FROM department WHERE id = ?";
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteDepByIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DEP_BY_ID_QUERY)) {
 
             preparedStatement.setLong(1, id);
             int affectedRows = preparedStatement.executeUpdate();
@@ -95,10 +101,8 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
 
     @Override
     public boolean existsById(long id) {
-        String existsDepByIdQuery = "SELECT 1 FROM department WHERE id = ?";
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(existsDepByIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(EXISTS_DEP_BY_ID_QUERY)) {
 
             preparedStatement.setLong(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -110,10 +114,8 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
     }
 
     private Department insert(Department department) {
-        String insertDepQuery = "INSERT INTO department (name, employee_count) VALUES (?, ?)";
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertDepQuery, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_DEP_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, department.getName());
             preparedStatement.setInt(2, department.getEmployeeCount());
@@ -134,10 +136,8 @@ public class PostgreSQLDepartmentRepositoryImpl implements DepartmentRepository 
     }
 
     private Department update(Department department) {
-        String updateDepQuery = "UPDATE department SET name = ?, employee_count = ? WHERE id = ?";
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateDepQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_DEP_QUERY)) {
 
             preparedStatement.setString(1, department.getName());
             preparedStatement.setInt(2, department.getEmployeeCount());

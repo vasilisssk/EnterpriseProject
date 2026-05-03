@@ -2,16 +2,18 @@ package ru.vsu.cs.erokhov_v_e.factory;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import ru.vsu.cs.erokhov_v_e.data.config.PostgresDataSourceProperties;
 
 import javax.sql.DataSource;
 
 public class DataSourceFactory {
 
     public static DataSource createPostgreSQLDataSource() {
+        PostgresDataSourceProperties props = new PostgresDataSourceProperties();
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5432/enterprise_db");
-        hikariConfig.setUsername("postgres");
-        hikariConfig.setPassword("12345");
+        hikariConfig.setJdbcUrl(props.getUrl());
+        hikariConfig.setUsername(props.getUsername());
+        hikariConfig.setPassword(props.getPassword());
         return new HikariDataSource(hikariConfig);
     }
 }
