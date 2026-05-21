@@ -80,4 +80,8 @@ public class EnterpriseService {
         departmentService.selectById(departmentId);
         return employeeService.selectTotalSalaryByDepartment(departmentId);
     }
+
+    public Employee findEmployeeById(long id) {
+        return employeeService.selectById(id);
+    }
 }
