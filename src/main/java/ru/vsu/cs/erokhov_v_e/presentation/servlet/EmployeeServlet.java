@@ -55,12 +55,20 @@ public class EmployeeServlet extends HttpServlet {
 
         String method = request.getParameter(WebConstants.PARAM_METHOD);
 
-        if (method == null) {
-            handleInsert(request, response);
-        } else if (method.equalsIgnoreCase(WebConstants.METHOD_DELETE)) {
-            handleDelete(request, response);
-        } else if (method.equalsIgnoreCase(WebConstants.METHOD_PUT)) {
-            handleUpdate(request, response);
+        String resolvedMethod = method == null ? "POST" : method.toUpperCase();
+
+        switch (resolvedMethod) {
+            case "POST":
+                handleInsert(request, response);
+                break;
+            case "DELETE":
+                handleDelete(request, response);
+                break;
+            case "PUT":
+                handleUpdate(request, response);
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
 
